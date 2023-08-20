@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\User;
 use App\Enums\UserType;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
@@ -15,17 +16,17 @@ class AdminDashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $customerCount = User::where('user_type', UserType::TYPE_CUSTOMER)->count();
+        $customer_count = User::where('user_type', UserType::TYPE_CUSTOMER)->count();
 
-        $recentCustomers = User::where('user_type', UserType::TYPE_CUSTOMER)
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
-            ->get();
+        $total_packages = DB::table('vepost_tracking')->count();
 
+        $viewed_packages = DB::table('vepost_tracking')->whereNotNull('view_once')->count();
 
         return Inertia::render('adminviews/AdminDashboard', [
-            'customerCount' => $customerCount,
-            'recentCustomers' => $recentCustomers,
+            'customerCount' => $customer_count,
+            'totalPackages' => $total_packages,
+            'viewedOnce' => $viewed_packages
+
         ]);
     }
 }

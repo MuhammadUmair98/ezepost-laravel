@@ -6,6 +6,7 @@ use App\Enums\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Inertia\Inertia;
 
@@ -63,12 +64,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = User::find($id);
-
-        if (!$customer || $customer->user_type !== UserType::TYPE_CUSTOMER) {
-            return redirect()->route('home')->with('error', 'Customer not found.');
-        }
-
+        $customer = User::findOrFail($id);
+        $packages =  DB::table('vepost_tracking')->where('sender_username', $customer->username)->get();
         return Inertia::render('customers/Edit', [
             'customer' => [
                 'id' => $customer->id,
@@ -77,6 +74,15 @@ class CustomerController extends Controller
                 'username' => $customer->username,
                 'phone' => $customer->phone,
             ],
+            'packages' => $packages->map(function ($package) {
+                return [
+                    'name' => $package->sender_username,
+                    'fileName' => $package->file_name,
+                    'fileSizeTransfer' => $package->file_size_transfer,
+                    'senderOS' => $package->sender_OS,
+                    'senderDeviceName' => $package->sender_device_name,
+                ];
+            })
         ]);
     }
 
@@ -105,5 +111,4 @@ class CustomerController extends Controller
 
         return redirect()->route('customer.edit', ['id' => $customer->id])->with('success', 'Customer updated successfully.');
     }
-
 }
