@@ -1,0 +1,7 @@
+<template>COOL</template>
+
+<script>
+export default {};
+</script>
+
+<style></style>
