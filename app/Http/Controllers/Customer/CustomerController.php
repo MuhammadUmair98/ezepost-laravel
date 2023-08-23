@@ -76,11 +76,15 @@ class CustomerController extends Controller
             ],
             'packages' => $packages->map(function ($package) {
                 return [
-                    'name' => $package->sender_username,
+                    's_name' => $package->sender_displayname,
                     'fileName' => $package->file_name,
                     'fileSizeTransfer' => $package->file_size_transfer,
                     'senderOS' => $package->sender_OS,
                     'senderDeviceName' => $package->sender_device_name,
+                    'r_name' => $package->receiver_displayname,
+                    'receiverOS' => $package->receiver_OS,
+                    'receiverDeviceName' => $package->receiver_device_name,
+                    'senttime' => $package->time_send_start,
                 ];
             })
         ]);

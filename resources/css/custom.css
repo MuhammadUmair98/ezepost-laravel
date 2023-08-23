@@ -24,7 +24,7 @@
 }
 
 /* customer edit */
-.btn-primary{
+.btn-primary {
     background-color: #5e31ff !important;
     padding: 4px 15px;
     border-radius: 20px;
@@ -32,3 +32,6 @@
     margin-bottom: 10px;
 }
 
+.w-44 {
+    width: 44px !important;
+}
