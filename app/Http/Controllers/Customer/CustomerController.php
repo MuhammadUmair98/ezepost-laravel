@@ -15,12 +15,14 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user = new User;
+        if (isset($request->search)) {
+            $user = $user->where('username', 'LIKE', '%' . $request->search . '%');
+        }
         return Inertia::render('customers/Index', [
-            'customers' => User::where('user_type', UserType::TYPE_CUSTOMER)
-                ->orderBy('created_at')
-                // ->filter(FacadesRequest::only('search'))
+            'customers' => $user->where('user_type', UserType::TYPE_CUSTOMER)->orderBy('created_at')
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($customer) => [
