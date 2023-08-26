@@ -20,7 +20,11 @@
         </div>
     </div>
 </template>
-
+<style scoped>
+.bg-white {
+    background-color: gainsboro;
+}
+</style>
 <script>
 import { Link } from "@inertiajs/vue3";
 

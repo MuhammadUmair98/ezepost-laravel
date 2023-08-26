@@ -4,6 +4,7 @@ use App\Enums\UserType;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,12 +37,13 @@ Route::middleware(['auth'])->group(function () {
         function () {
 
             Route::get('/admin/dashboard', AdminDashboardController::class);
+            Route::get('/admin/packages/today', [PackageController::class, 'packagesRecievedToday']);
+            Route::get('/admin/packages/history', [PackageController::class, 'packagesHistory']);
             Route::get('/admin/customers', [CustomerController::class, 'index']);
             Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
             Route::put('/customers/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
         }
     );
 
