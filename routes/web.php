@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customer/pricing', [PlanController::class, 'index'])->name('pricing');
             Route::get('/customer/checkout/{slug}', [PlanController::class, 'create']);
             Route::post('/customer/subscribe', [PlanController::class, 'store']);
+            Route::post('/remove-subscription', [PlanController::class, 'cancelSubscription']);
         }
     );
 });

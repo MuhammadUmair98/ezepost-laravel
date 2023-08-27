@@ -3,23 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\Subscription as ModelsSubscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Laravel\Cashier\Exceptions\IncompletePayment;
+use Stripe\Stripe;
+use Stripe\Subscription;
 
 class PlanController extends Controller
 {
+    public function __construct()
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subscriptionItem = !empty(auth()->user()->subscription('default')) ? auth()->user()->subscription('default')->items->first(): '';
+        $subscriptionItem = !empty(auth()->user()->subscription('default')) ? auth()->user()->subscription('default')->items->first() : '';
 
         $stripePrice = '';
 
-        if(!empty($subscriptionItem))
+        if (!empty($subscriptionItem))
             $stripePrice = $subscriptionItem->stripe_price;
 
         return inertia::render('customerViews/customerPricing', [
@@ -33,10 +42,10 @@ class PlanController extends Controller
                     'price' => $plan->price,
                     'icon' => $plan->icon,
                     'slug' => $plan->slug,
-                    'stripe_plan' => $plan->stripe_plan,
                     'description' => $plan->description,
+                    'stripe_plan' => $plan->stripe_plan,
                     'message' => $plan->message,
-                    'options' => json_decode($plan->options, true)
+                    'options' => json_decode($plan->options, true),
                 ];
             }),
         ]);
@@ -50,10 +59,10 @@ class PlanController extends Controller
         $intent = [];
         $subscribe = false;
 
-        $plan = DB::table('plans')->select('id', 'type', 'name', 'code', 'price', 'icon', 'slug', 'description', 'message', 'options')->where('slug', $slug)->first();
-        if(empty($plan)) return to_route('pricing');
+        $plan = DB::table('plans')->select('id', 'type', 'name', 'code', 'price', 'icon', 'slug', 'description', 'stripe_plan', 'message', 'options')->where('slug', $slug)->first();
+        if (empty($plan)) return to_route('pricing');
 
-        if(auth()->check() === true) {
+        if (auth()->check() === true) {
             $subscribe = auth()->user()->subscribed('default');
 
             if ($subscribe === false) {
@@ -75,7 +84,8 @@ class PlanController extends Controller
                 'slug' => $plan->slug,
                 'description' => $plan->description,
                 'message' => $plan->message,
-                'options' => json_decode($plan->options, true)
+                'options' => json_decode($plan->options, true),
+                'stripePlan' => $plan->stripe_plan,
             ]
         ]);
     }
@@ -88,7 +98,7 @@ class PlanController extends Controller
         $user = auth()->user();
         $plan = DB::table('plans')->select('id', 'stripe_plan')->where('slug', $request->slug)->first();
 
-        try{
+        try {
             $user->createOrGetStripeCustomer();
             $user->updateDefaultPaymentMethod($request->payment);
 
@@ -107,7 +117,7 @@ class PlanController extends Controller
                 'data3' => $exception->payment->status,
                 'data4' => ''
             ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->error($e->getMessage(), 400);
         }
     }
@@ -139,8 +149,15 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function cancelSubscription(Request $request)
     {
+        $request->validate(['plan' => 'required']);
+        request()->user()->subscription('default', $request->stripePlan)->cancel();
+        $subscription = ModelsSubscription::where('user_id', request()->user()->id)->first();
+        $subscription_id = $subscription->id;
+        $subscription->delete();
+        DB::table('subscription_items')->where('subscription_id', $subscription_id)->delete();
+        return Redirect::to('customer/pricing');
         //
     }
 }
