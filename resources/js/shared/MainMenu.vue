@@ -1,211 +1,244 @@
 <template>
     <div :class="[collapsed ? '' : 'w-56']">
-        <div class="mb-0">
-            <Link class="group flex items-center py-3" href="/admin/dashboard">
-                <icon
-                    name="dashboard"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('admin/dashboard')
-                            ? 'fill-white'
-                            : 'menuTextColor group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('admin/dashboard')
-                            ? 'text-white menu-text'
-                            : 'menuTextColor group-hover:text-white menu-text menu-text'
-                    "
+        <div v-if="this.$page.props.auth.user.user_type === 'admin'">
+            <div class="mb-0">
+                <Link
+                    class="group flex items-center py-3"
+                    href="/admin/dashboard"
                 >
-                    Dashboard
-                </div>
-            </Link>
-        </div>
-        <div class="py-3">
-            <div class="tabs">
-                <div class="relative tab">
-                    <input
-                        class="tab-checkbox"
-                        type="checkbox"
-                        id="master-plan-accordion"
-                        :checked="true"
+                    <icon
+                        name="dashboard"
+                        class="mr-2 w-4 h-4"
+                        :class="
+                            isUrl('admin/dashboard')
+                                ? 'fill-white'
+                                : 'menuTextColor group-hover:fill-white'
+                        "
                     />
-                    <label
-                        class="tab-label styles-configurator-tab-label"
-                        :style="`${
-                            collapsed ? 'display: none !important' : ''
-                        }`"
-                        for="master-plan-accordion"
-                    >
-                        {{ "Packages" }}
-                    </label>
                     <div
-                        :class="['tab-content', !collapsed ? 'pl-3 pt-3' : '']"
+                        :class="
+                            isUrl('admin/dashboard')
+                                ? 'text-white menu-text'
+                                : 'menuTextColor group-hover:text-white menu-text menu-text'
+                        "
                     >
-                        <div class="mb-0">
-                            <Link
-                                class="group flex items-center py-2"
-                                href="/admin/packages/today"
-                            >
-                                <icon
-                                    name="office"
-                                    class="mr-2 w-4 h-4"
-                                    :class="
-                                        isUrl('admin/packages/today')
-                                            ? 'fill-white'
-                                            : 'menuTextColor group-hover:fill-white'
-                                    "
-                                />
-                                <div
-                                    :class="
-                                        isUrl('admin/packages/today')
-                                            ? 'text-white menu-text'
-                                            : 'menuTextColor group-hover:text-white menu-text'
-                                    "
+                        Dashboard
+                    </div>
+                </Link>
+            </div>
+            <div class="py-3">
+                <div class="tabs">
+                    <div class="relative tab">
+                        <input
+                            class="tab-checkbox"
+                            type="checkbox"
+                            id="master-plan-accordion"
+                            :checked="true"
+                        />
+                        <label
+                            class="tab-label styles-configurator-tab-label"
+                            :style="`${
+                                collapsed ? 'display: none !important' : ''
+                            }`"
+                            for="master-plan-accordion"
+                        >
+                            {{ "Packages" }}
+                        </label>
+                        <div
+                            :class="[
+                                'tab-content',
+                                !collapsed ? 'pl-3 pt-3' : '',
+                            ]"
+                        >
+                            <div class="mb-0">
+                                <Link
+                                    class="group flex items-center py-2"
+                                    href="/admin/packages/today"
                                 >
-                                    {{ "Packages Today" }}
-                                </div>
-                            </Link>
-                        </div>
-                        <div class="mb-0">
-                            <Link
-                                class="group flex items-center py-2"
-                                href="/admin/packages/history"
-                            >
-                                <icon
-                                    name="users"
-                                    class="mr-2 w-4 h-4"
-                                    :class="
-                                        isUrl('admin/packages/history')
-                                            ? 'fill-white'
-                                            : 'menuTextColor group-hover:fill-white'
-                                    "
-                                />
-                                <div
-                                    :class="
-                                        isUrl('admin/packages/history')
-                                            ? 'text-white menu-text'
-                                            : 'menuTextColor group-hover:text-white menu-text'
-                                    "
+                                    <icon
+                                        name="office"
+                                        class="mr-2 w-4 h-4"
+                                        :class="
+                                            isUrl('admin/packages/today')
+                                                ? 'fill-white'
+                                                : 'menuTextColor group-hover:fill-white'
+                                        "
+                                    />
+                                    <div
+                                        :class="
+                                            isUrl('admin/packages/today')
+                                                ? 'text-white menu-text'
+                                                : 'menuTextColor group-hover:text-white menu-text'
+                                        "
+                                    >
+                                        {{ "Packages Today" }}
+                                    </div>
+                                </Link>
+                            </div>
+                            <div class="mb-0">
+                                <Link
+                                    class="group flex items-center py-2"
+                                    href="/admin/packages/history"
                                 >
-                                    {{ "Packages History" }}
-                                </div>
-                            </Link>
+                                    <icon
+                                        name="users"
+                                        class="mr-2 w-4 h-4"
+                                        :class="
+                                            isUrl('admin/packages/history')
+                                                ? 'fill-white'
+                                                : 'menuTextColor group-hover:fill-white'
+                                        "
+                                    />
+                                    <div
+                                        :class="
+                                            isUrl('admin/packages/history')
+                                                ? 'text-white menu-text'
+                                                : 'menuTextColor group-hover:text-white menu-text'
+                                        "
+                                    >
+                                        {{ "Packages History" }}
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-        <div v-show="isUrl('organizations') || isUrl('admin/customers') " class="mb-4">
-            <Link class="group flex items-center py-3" href="/admin/customers">
-                <icon
-                    name="office"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('organizations')
-                            ? 'fill-white'
-                            : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('admin/customers')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                    "
-                >
-                    Customers
+                </div>
+            </div>
+            <div class="py-3">
+                <div class="tabs">
+                    <div class="relative tab">
+                        <input
+                            class="tab-checkbox"
+                            type="checkbox"
+                            id="customer-accordian"
+                            :checked="true"
+                        />
+                        <label
+                            class="tab-label styles-configurator-tab-label"
+                            :style="`${
+                                collapsed ? 'display: none !important' : ''
+                            }`"
+                            for="customer-accordian"
+                        >
+                            {{ "Customer" }}
+                        </label>
+                        <div
+                            :class="[
+                                'tab-content',
+                                !collapsed ? 'pl-3 pt-3' : '',
+                            ]"
+                        >
+                            <div class="mb-0">
+                                <Link
+                                    class="group flex items-center py-2"
+                                    href="/admin/customers"
+                                >
+                                    <icon
+                                        name="office"
+                                        class="mr-2 w-4 h-4"
+                                        :class="
+                                            isUrl('admin/customers')
+                                                ? 'fill-white'
+                                                : 'menuTextColor group-hover:fill-white'
+                                        "
+                                    />
+                                    <div
+                                        :class="
+                                            isUrl('admin/customers')
+                                                ? 'text-white menu-text'
+                                                : 'menuTextColor group-hover:text-white menu-text'
+                                        "
+                                    >
+                                        {{ "Customers" }}
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="py-3">
-            <div class="tabs">
-                <div class="relative tab">
-                    <input
-                        class="tab-checkbox"
-                        type="checkbox"
-                        id="master-plan-accordion"
-                        :checked="true"
+        <div v-else-if="this.$page.props.auth.user.user_type === 'customer'">
+            <div class="mb-0">
+                <Link
+                    class="group flex items-center py-3"
+                    href="/customer/dashboard"
+                >
+                    <icon
+                        name="dashboard"
+                        class="mr-2 w-4 h-4"
+                        :class="
+                            isUrl('customer/dashboard')
+                                ? 'fill-white'
+                                : 'menuTextColor group-hover:fill-white'
+                        "
                     />
-                    <label
-                        class="tab-label styles-configurator-tab-label"
-                        :style="`${
-                            collapsed ? 'display: none !important' : ''
-                        }`"
-                        for="master-plan-accordion"
-                    >
-                        {{ "Customer" }}
-                    </label>
                     <div
-                        :class="['tab-content', !collapsed ? 'pl-3 pt-3' : '']"
+                        :class="
+                            isUrl('customer/dashboard')
+                                ? 'text-white menu-text'
+                                : 'menuTextColor group-hover:text-white menu-text menu-text'
+                        "
                     >
-                        <div class="mb-0">
-                            <Link
-                                class="group flex items-center py-2"
-                                href="/admin/customers"
+                        Dashboard
+                    </div>
+                </Link>
+            </div>
+            <div class="mb-4">
+                <div class="py-3">
+                    <div class="tabs">
+                        <div class="relative tab">
+                            <input
+                                class="tab-checkbox"
+                                type="checkbox"
+                                id="customer-accordian"
+                                :checked="true"
+                            />
+                            <label
+                                class="tab-label styles-configurator-tab-label"
+                                :style="`${
+                                    collapsed ? 'display: none !important' : ''
+                                }`"
+                                for="customer-accordian"
                             >
-                                <icon
-                                    name="office"
-                                    class="mr-2 w-4 h-4"
-                                    :class="
-                                        isUrl('admin/customers')
-                                            ? 'fill-white'
-                                            : 'menuTextColor group-hover:fill-white'
-                                    "
-                                />
-                                <div
-                                    :class="
-                                        isUrl('admin/customers')
-                                            ? 'text-white menu-text'
-                                            : 'menuTextColor group-hover:text-white menu-text'
-                                    "
-                                >
-                                    {{ "Customers" }}
+                                {{ "Payments" }}
+                            </label>
+                            <div
+                                :class="[
+                                    'tab-content',
+                                    !collapsed ? 'pl-3 pt-3' : '',
+                                ]"
+                            >
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/pricing"
+                                    >
+                                        <icon
+                                            name="printer"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/pricing')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/dashboard')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Pricing
+                                        </div>
+                                    </Link>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                     </div>
-        <div v-show="isUrl('reports')" class="mb-4">
-            <Link class="group flex items-center py-3" href="/reports">
-                <icon
-                    name="printer"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('reports')
-                            ? 'fill-white'
-                            : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('reports')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                    "
-                >
-                    Reports
                 </div>
             </div>
-        </div>
-        <div v-show="isUrl('customer/pricing') || isUrl('customer/dashboard') || isUrl('customer/checkout')" class="mb-4">
-            <Link class="group flex items-center py-3" href="/customer/pricing">
-                <icon
-                    name="printer"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('customer/pricing')
-                            ? 'fill-white'
-                            : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('customer/dashboard')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                    "
-                >
-                    Pricing
-                </div>
-            </Link>
         </div>
     </div>
 </template>
