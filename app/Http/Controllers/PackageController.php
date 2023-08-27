@@ -33,7 +33,7 @@ class PackageController extends Controller
     {
 
         $packages_history =  DB::table('vepost_tracking')->when(isset($request->search), function ($query) use ($request) {
-            $query->where('file_name', 'LIKE', '%' . $request->search . '%');
+            $query->where('file_name', 'LIKE', '%' . $request->search . '%')->orWhere('sender_username', "LIKE", "%" . $request->search . "%");
         })->paginate(10)->withQueryString()->through(fn ($item) => [
             'id' => $item->id,
             'fileName' => $item->file_name,

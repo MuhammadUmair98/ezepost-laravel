@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\Stripe;
-use Stripe\Subscription;
 
 class PlanController extends Controller
 {
