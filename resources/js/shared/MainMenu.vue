@@ -239,6 +239,112 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-4">
+                <div class="py-3">
+                    <div class="tabs">
+                        <div class="relative tab">
+                            <input
+                                class="tab-checkbox"
+                                type="checkbox"
+                                id="packages-now-accordian"
+                                :checked="true"
+                            />
+                            <label
+                                class="tab-label styles-configurator-tab-label"
+                                :style="`${
+                                    collapsed ? 'display: none !important' : ''
+                                }`"
+                                for="packages-now-accordian"
+                            >
+                                {{ "Packages Today" }}
+                            </label>
+
+                            <div
+                                :class="[
+                                    'tab-content',
+                                    !collapsed ? 'pl-3 pt-3' : '',
+                                ]"
+                            >
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/sent/today"
+                                    >
+                                        <icon
+                                            name="users"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/sent/today')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/sent/today')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Sent
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/recieved/today"
+                                    >
+                                        <icon
+                                            name="office"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/recieved/today')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/recieved/today')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Recieved
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/viewed/today"
+                                    >
+                                        <icon
+                                            name="office"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/viewed/today')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/viewed/today')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Viewed
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

@@ -4,6 +4,7 @@ use App\Enums\UserType;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\CustomerPackageController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
@@ -56,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customer/checkout/{slug}', [PlanController::class, 'create']);
             Route::post('/customer/subscribe', [PlanController::class, 'store']);
             Route::post('/remove-subscription', [PlanController::class, 'cancelSubscription']);
+            Route::get('/customer/sent/today', [CustomerPackageController::class, 'packagesSentToday']);
+            Route::get('/customer/recieved/today', [CustomerPackageController::class, 'packagesRecievedToday']);
         }
     );
 });
