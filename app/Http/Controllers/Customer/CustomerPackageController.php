@@ -31,8 +31,23 @@ class CustomerPackageController extends Controller
     }
 
 
-    public function packagesViewedToday()
+    public function packagesViewedToday(Request $request)
     {
+        $model = new VepostTracking;
+        if ($request->search) {
+            $model->where("file_name", "LIKE", "%" . $request->search . "%");
+        }
+        $username = $request->user()->username;
+        $vendor_trackings = VepostTracking::whereNotNull('view_once')
+            ->where('receiver_username', $username)->orWhere('sender_username', $username)
+            ->whereDate('time_send_end', Carbon::now())->paginate(10);
+        return Inertia::render(
+            'customers/Packages',
+            [
+                'headText' => 'Packages Viewed',
+                'packages' => $vendor_trackings
+            ]
+        );
     }
 
 

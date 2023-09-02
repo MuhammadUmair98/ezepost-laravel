@@ -321,7 +321,7 @@
                                         href="/customer/viewed/today"
                                     >
                                         <icon
-                                            name="office"
+                                            name="dashboard"
                                             class="mr-2 w-4 h-4"
                                             :class="
                                                 isUrl('customer/viewed/today')
