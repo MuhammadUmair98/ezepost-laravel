@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/remove-subscription', [PlanController::class, 'cancelSubscription']);
             Route::get('/customer/sent/today', [CustomerPackageController::class, 'packagesSentToday']);
             Route::get('/customer/recieved/today', [CustomerPackageController::class, 'packagesRecievedToday']);
+            Route::get('/customer/viewed/today', [CustomerPackageController::class, 'packagesViewedToday']);
         }
     );
 });
