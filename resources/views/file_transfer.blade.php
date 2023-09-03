@@ -158,11 +158,11 @@
             <tr>
                 <td class="border-0 pl-0" width="70%">
                     <h4 class="text-uppercase">
-                        <strong>{{ $file->name }}</strong>
+                        <strong>{{ $file->file_name }}</strong>
                     </h4>
                 </td>
                 <td class="border-0 pl-0">
-                    <strong>{{$file->size}}</strong>
+                    <strong>{{$file->file_size_transfer}}</strong>
                 </td>
                 <td class="border-0 pl-0">
                     <strong>{{$file->ltime_send_end}}</strong>
