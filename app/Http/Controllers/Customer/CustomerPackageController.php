@@ -39,8 +39,10 @@ class CustomerPackageController extends Controller
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::whereNotNull('view_once')
-            ->where('receiver_username', $username)->orWhere('sender_username', $username)
+        $vendor_trackings = VepostTracking::whereNotNull('view_once')->where(function ($query) use ($username) {
+            $query->where('receiver_username', $username)
+                ->orWhere('sender_username', $username);
+        })
             ->whereDate('time_send_end', Carbon::now())->paginate(10);
         return Inertia::render(
             'customers/Packages',
