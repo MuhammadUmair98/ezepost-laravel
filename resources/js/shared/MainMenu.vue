@@ -158,31 +158,11 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         <div v-else-if="this.$page.props.auth.user.user_type === 'customer'">
             <div class="mb-0">
                 <Link
                     class="group flex items-center py-3"
                     href="/customer/dashboard"
-=======
-        <div v-show="isUrl('organizations') || isUrl('admin/customers') " class="mb-4">
-            <Link class="group flex items-center py-3" href="/admin/customers">
-                <icon
-                    name="office"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('organizations')
-                            ? 'fill-white'
-                            : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('admin/customers')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                    "
->>>>>>> dev-topup
                 >
                     <icon
                         name="dashboard"
@@ -258,7 +238,6 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
             </div>
             <div class="mb-4">
                 <div class="py-3">
@@ -364,29 +343,6 @@
                             </div>
                         </div>
                     </div>
-=======
-            </Link>
-        </div>
-        <div v-show="isUrl('reports')" class="mb-4">
-            <Link class="group flex items-center py-3" href="/reports">
-                <icon
-                    name="printer"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                        isUrl('reports')
-                            ? 'fill-white'
-                            : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                />
-                <div
-                    :class="
-                        isUrl('reports')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                    "
-                >
-                    Reports
->>>>>>> dev-topup
                 </div>
             </div>
             <div class="mb-4">
@@ -500,7 +456,15 @@
                 </div>
             </div>
         </div>
-        <div v-show="isUrl('customer/pricing') || isUrl('customer/dashboard') || isUrl('customer/checkout') || isUrl('customer/top-up')" class="mb-4">
+        <div
+            v-show="
+                isUrl('customer/pricing') ||
+                isUrl('customer/dashboard') ||
+                isUrl('customer/checkout') ||
+                isUrl('customer/top-up')
+            "
+            class="mb-4"
+        >
             <Link class="group flex items-center py-3" href="/customer/pricing">
                 <icon
                     name="printer"
@@ -522,7 +486,15 @@
                 </div>
             </Link>
         </div>
-        <div v-show="isUrl('customer/pricing') || isUrl('customer/dashboard') || isUrl('customer/checkout') || isUrl('customer/top-up')" class="mb-4">
+        <div
+            v-show="
+                isUrl('customer/pricing') ||
+                isUrl('customer/dashboard') ||
+                isUrl('customer/checkout') ||
+                isUrl('customer/top-up')
+            "
+            class="mb-4"
+        >
             <Link class="group flex items-center py-3" href="/customer/top-up">
                 <icon
                     name="printer"
