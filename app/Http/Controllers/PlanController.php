@@ -11,6 +11,7 @@ use Inertia\Inertia;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\Stripe;
 
+
 class PlanController extends Controller
 {
     public function __construct()
@@ -94,6 +95,8 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
+        if (empty($request->slug)) return response()->error(false, 400);
+        if (empty($request->payment)) return response()->error(false, 400);
         $user = auth()->user();
         $plan = DB::table('plans')->select('id', 'stripe_plan')->where('slug', $request->slug)->first();
 

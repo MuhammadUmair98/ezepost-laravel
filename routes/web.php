@@ -11,6 +11,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\UsertopupController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -68,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customer/sent/history', [CustomerHistoryController::class, 'packagesSentHistory']);
             Route::get('/customer/recieved/history', [CustomerHistoryController::class, 'packagesRecievedHistory']);
             Route::get('/customer/viewed/history', [CustomerHistoryController::class, 'packagesViewedHistory']);
+
+            Route::get('/customer/top-up', [UsertopupController::class, 'index']);
+            Route::post('/customer/charge', [UsertopupController::class, 'store']);
         }
     );
 });
