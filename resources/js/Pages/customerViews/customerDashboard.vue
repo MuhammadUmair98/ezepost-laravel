@@ -2,7 +2,7 @@
     <div>
         <Head title="Dashboard" ><title>Dashboard</title></Head>
         <h1 class="mb-8 text-3xl font-bold">Dashboard</h1>
-        <div class="flex justify-center mt-8 space-x-4">
+        <div class="flex justify-center mt-20 space-x-4 pt-5" >
             <!-- Total Customers Card -->
             <div class="bg-rgb-primary p-6 rounded-lg shadow-lg text-center">
                 <svg

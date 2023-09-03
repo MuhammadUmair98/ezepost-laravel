@@ -32,7 +32,7 @@ class PlanController extends Controller
 
         return inertia::render('customerViews/customerPricing', [
             'activePrice' => $stripePrice,
-            'plans' => DB::table('plans')->get()->map(function ($plan) {
+            'plans' => DB::table('plans')->where('type','personal')->get()->map(function ($plan) {
                 return [
                     'id' => $plan->id,
                     'type' => $plan->type,
@@ -45,12 +45,48 @@ class PlanController extends Controller
                     'stripe_plan' => $plan->stripe_plan,
                     'message' => $plan->message,
                     'options' => json_decode($plan->options, true),
+                    'subscription_type' => $plan->subscription_type,
+                ];
+            }),
+        ]);
+    }
+        /**
+     * Display a Pricing Business
+     */
+    public function indexBusiness()
+    {
+        $subscriptionItem = !empty(auth()->user()->subscription('default')) ? auth()->user()->subscription('default')->items->first() : '';
+
+        $stripePrice = '';
+
+        if (!empty($subscriptionItem))
+            $stripePrice = $subscriptionItem->stripe_price;
+
+        return inertia::render('customerViews/customerPricingBusiness', [
+            'activePrice' => $stripePrice,
+            'plans' => DB::table('plans')->where('type','business')->get()->map(function ($plan) {
+                return [
+                    'id' => $plan->id,
+                    'type' => $plan->type,
+                    'name' => $plan->name,
+                    'code' => $plan->code,
+                    'price' => $plan->price,
+                    'icon' => $plan->icon,
+                    'slug' => $plan->slug,
+                    'description' => $plan->description,
+                    'stripe_plan' => $plan->stripe_plan,
+                    'message' => $plan->message,
+                    'options' => json_decode($plan->options, true),
+                    'subscription_type' => $plan->subscription_type,
+
                 ];
             }),
         ]);
     }
 
+
     /**
+     * Stripe Payments 
      * Show the form for creating a new resource.
      */
     public function create($slug)
@@ -58,7 +94,7 @@ class PlanController extends Controller
         $intent = [];
         $subscribe = false;
 
-        $plan = DB::table('plans')->select('id', 'type', 'name', 'code', 'price', 'icon', 'slug', 'description', 'stripe_plan', 'message', 'options')->where('slug', $slug)->first();
+        $plan = DB::table('plans')->select('id', 'type', 'name', 'code', 'price', 'icon', 'slug', 'description', 'stripe_plan', 'message', 'options',)->where('slug', $slug)->first();
         if (empty($plan)) return to_route('pricing');
 
         if (auth()->check() === true) {
@@ -85,11 +121,14 @@ class PlanController extends Controller
                 'message' => $plan->message,
                 'options' => json_decode($plan->options, true),
                 'stripePlan' => $plan->stripe_plan,
+                
+                
             ]
         ]);
     }
 
     /**
+     * Linking to the Stripe (Creating Substription)
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -104,15 +143,15 @@ class PlanController extends Controller
             $user->newSubscription('default', $plan->stripe_plan)->create($request->payment);
 
             return response()->success([
-                'data1' => '',
-                'data2' => '',
-                'data3' => '',
+                'data1' => '/customer/dashboard',
+                'data2' => '/customer/dashboard',
+                'data3' => '/customer/dashboard',
                 'data4' => auth()->user()->subscribed('default')
             ]);
         } catch (IncompletePayment $exception) {
             return response()->success([
                 'data1' => $exception->payment->id,
-                'data2' => '/customer/pricing',
+                'data2' => '/customer/dashboard',
                 'data3' => $exception->payment->status,
                 'data4' => ''
             ]);
@@ -156,7 +195,7 @@ class PlanController extends Controller
         $subscription_id = $subscription->id;
         $subscription->delete();
         DB::table('subscription_items')->where('subscription_id', $subscription_id)->delete();
-        return Redirect::to('customer/pricing');
+        return Redirect::to('customer/dashboard');
         //
     }
 }

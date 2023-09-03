@@ -1,7 +1,7 @@
 <template>
     <div>
-        <Head title="Dashboard"><title>Pricing</title></Head>
-      <h1 class="mb-8 text-3xl font-bold">Design for Personal Use</h1>
+      <Head title="Dashboard"><title>Pricing</title></Head>
+      <h1 class="mb-8 text-3xl font-bold">Design for Business Use</h1>
       
   
       <div class="bg-white py-4">
@@ -62,12 +62,12 @@
                     : 'Select Plan'
                 }}
               </Link>
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 import { Head, Link } from "@inertiajs/vue3";

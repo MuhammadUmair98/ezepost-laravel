@@ -183,6 +183,7 @@
                         Dashboard
                     </div>
                 </Link>
+                
             </div>
             <div class="mb-4">
                 <div class="py-3">
@@ -212,25 +213,48 @@
                                 <div class="mb-0">
                                     <Link
                                         class="group flex items-center py-3"
-                                        href="/customer/pricing"
+                                        href="/customer/personal"
                                     >
                                         <icon
                                             name="printer"
                                             class="mr-2 w-4 h-4"
                                             :class="
-                                                isUrl('customer/pricing')
+                                                isUrl('customer/personal')
                                                     ? 'fill-white'
                                                     : 'fill-indigo-400 group-hover:fill-white'
                                             "
                                         />
                                         <div
                                             :class="
-                                                isUrl('customer/dashboard')
+                                                isUrl('customer/personal')
                                                     ? 'text-white'
                                                     : 'text-indigo-300 group-hover:text-white'
                                             "
                                         >
-                                            Pricing
+                                            Personal
+                                        </div>
+                                    </Link>
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/business"
+                                    >
+                                        <icon
+                                            name="printer"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/business')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/business')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Business
                                         </div>
                                     </Link>
                                 </div>
