@@ -4,9 +4,12 @@ use App\Enums\UserType;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\UsertopupController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +50,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(["check.permission:" . UserType::TYPE_CUSTOMER])->group(
         function () {
-            Route::get('/customer/dashboard', function () {
-                dd("Customer is here");
-            });
+            Route::get('/customer/dashboard', CustomerController::class);
+            Route::get('/customer/pricing', [PlanController::class, 'index'])->name('pricing');
+            Route::get('/customer/checkout/{slug}', [PlanController::class, 'create']);
+            Route::post('/customer/subscribe', [PlanController::class, 'store']);
+
+            Route::get('/customer/top-up', [UsertopupController::class, 'index']);
+            Route::post('/customer/charge', [UsertopupController::class, 'store']);
         }
     );
 });

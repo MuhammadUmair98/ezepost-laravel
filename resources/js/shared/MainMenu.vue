@@ -22,7 +22,7 @@
                 </div>
             </Link>
         </div>
-        <div class="mb-4">
+        <div v-show="isUrl('organizations') || isUrl('admin/customers') " class="mb-4">
             <Link class="group flex items-center py-3" href="/admin/customers">
                 <icon
                     name="office"
@@ -44,7 +44,7 @@
                 </div>
             </Link>
         </div>
-        <div class="mb-4">
+        <div v-show="isUrl('reports')" class="mb-4">
             <Link class="group flex items-center py-3" href="/reports">
                 <icon
                     name="printer"
@@ -63,6 +63,50 @@
                     "
                 >
                     Reports
+                </div>
+            </Link>
+        </div>
+        <div v-show="isUrl('customer/pricing') || isUrl('customer/dashboard') || isUrl('customer/checkout') || isUrl('customer/top-up')" class="mb-4">
+            <Link class="group flex items-center py-3" href="/customer/pricing">
+                <icon
+                    name="printer"
+                    class="mr-2 w-4 h-4"
+                    :class="
+                        isUrl('customer/pricing')
+                            ? 'fill-white'
+                            : 'fill-indigo-400 group-hover:fill-white'
+                    "
+                />
+                <div
+                    :class="
+                        isUrl('customer/dashboard')
+                            ? 'text-white'
+                            : 'text-indigo-300 group-hover:text-white'
+                    "
+                >
+                    Pricing
+                </div>
+            </Link>
+        </div>
+        <div v-show="isUrl('customer/pricing') || isUrl('customer/dashboard') || isUrl('customer/checkout') || isUrl('customer/top-up')" class="mb-4">
+            <Link class="group flex items-center py-3" href="/customer/top-up">
+                <icon
+                    name="printer"
+                    class="mr-2 w-4 h-4"
+                    :class="
+                        isUrl('customer/pricing')
+                            ? 'fill-white'
+                            : 'fill-indigo-400 group-hover:fill-white'
+                    "
+                />
+                <div
+                    :class="
+                        isUrl('customer/dashboard')
+                            ? 'text-white'
+                            : 'text-indigo-300 group-hover:text-white'
+                    "
+                >
+                    Top up
                 </div>
             </Link>
         </div>

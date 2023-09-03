@@ -12,6 +12,23 @@ use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
+
+    public function __invoke(Request $request)
+    {
+        $customer_count =0;
+
+        $total_packages =0;
+
+        $viewed_packages = 0;
+
+        return Inertia::render('customerViews/customerDashboard', [
+            'customerCount' => $customer_count,
+            'totalPackages' => $total_packages,
+            'viewedOnce' => $viewed_packages
+
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
