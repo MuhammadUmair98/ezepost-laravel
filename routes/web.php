@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\CustomerPackageController;
+use App\Http\Controllers\Customer\CustomerHistoryController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
@@ -34,6 +36,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/', [UserController::class, 'showUserDashboard']);
 Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/vepost-tracking/pdf/{id}', [PdfController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(["check.permission:" . UserType::TYPE_ADMIN])->group(
@@ -60,6 +63,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customer/sent/today', [CustomerPackageController::class, 'packagesSentToday']);
             Route::get('/customer/recieved/today', [CustomerPackageController::class, 'packagesRecievedToday']);
             Route::get('/customer/viewed/today', [CustomerPackageController::class, 'packagesViewedToday']);
+
+            //comments
+            Route::get('/customer/sent/history', [CustomerHistoryController::class, 'packagesSentHistory']);
+            Route::get('/customer/recieved/history', [CustomerHistoryController::class, 'packagesRecievedHistory']);
+            Route::get('/customer/viewed/history', [CustomerHistoryController::class, 'packagesViewedHistory']);
         }
     );
 });

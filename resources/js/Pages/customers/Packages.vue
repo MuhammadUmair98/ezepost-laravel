@@ -42,7 +42,7 @@
                     </td>
                     <td class="border-t">
                         <Link class="flex items-center px-6 py-4" tabindex="-1">
-                            {{ packageData.reciever_username }}
+                            {{ packageData.receiver_username }}
                         </Link>
                     </td>
                 </tr>
@@ -79,6 +79,7 @@ export default {
     props: {
         packages: Object,
         headText: String,
+        url: String,
     },
     data() {
         return {
@@ -91,13 +92,9 @@ export default {
         form: {
             deep: true,
             handler: throttle(function () {
-                this.$inertia.get(
-                    "/customer/recieved/today",
-                    pickBy(this.form),
-                    {
-                        preserveState: true,
-                    }
-                );
+                this.$inertia.get(this.url, pickBy(this.form), {
+                    preserveState: true,
+                });
             }, 150),
         },
     },

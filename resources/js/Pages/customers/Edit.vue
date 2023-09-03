@@ -78,10 +78,14 @@
                     </td>
 
                     <td class="text-center border-t">
-                        <button @click="downloadPDF(packageTransfered)">
-                            <img class="w-44" src="/assets/download_icon.png" alt="Download Icon" />
+                        <button @click="downloadPDF(packageTransfered.id)">
+                            <img
+                                class="w-44"
+                                src="/assets/download_icon.png"
+                                alt="Download Icon"
+                            />
                         </button>
-                        </td>
+                    </td>
                 </tr>
                 <tr v-if="packages.length === 0">
                     <td class="px-6 py-4 border-t" colspan="4">
@@ -98,7 +102,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import LoadingButton from "../../shared/LoadingButton.vue";
 import Layout from "../../shared/Layout.vue";
 import TextInput from "../../shared/TextInput.vue";
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
 
 export default {
     components: {
@@ -136,64 +140,10 @@ export default {
             }
         },
 
-        downloadPDF(packageTransfered) {
-            const pdf = new jsPDF();
-
-            const xOffset = 10;
-            let yOffset = 20; // Initial yOffset value
-
-            const lineHeight = 10;
-            const tableWidth = 180;
-            const pageWidth = pdf.internal.pageSize.width;
-
-            pdf.setFontSize(16);
-            const headingText = `Package Details: ${packageTransfered.s_name}`;
-            const headingWidth = pdf.getStringUnitWidth(headingText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
-            const headingX = (pageWidth - headingWidth) / 2; // Calculate centered x-coordinate
-            pdf.text(headingText, headingX, yOffset);
-
-            yOffset += 15; // Increase yOffset for spacing after heading
-
-            pdf.setFontSize(12);
-
-            const tableData = [
-                ['File Name:', packageTransfered.fileName],
-                ['File Size Transfer:', packageTransfered.fileSizeTransfer],
-                ['Sender OS:', packageTransfered.senderOS],
-                ['Sender Device Name:', packageTransfered.senderDeviceName],
-                ['Receiver Name:', packageTransfered.r_name],
-                ['Receiver OS:', packageTransfered.receiverOS],
-                ['Receiver Device Name:', packageTransfered.receiverDeviceName],
-                ['Sending Time:', packageTransfered.senttime],
-            ];
-
-            tableData.forEach((row, rowIndex) => {
-                const fillColor = rowIndex % 2 === 0 ? [240, 240, 240] : [255, 255, 255];
-
-                row.forEach((cell, cellIndex) => {
-                pdf.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
-                pdf.rect(
-                    xOffset + cellIndex * (tableWidth / 2),
-                    yOffset + rowIndex * lineHeight,
-                    tableWidth / 2,
-                    lineHeight,
-                    'F'
-                );
-
-                const textColor = cellIndex === 0 ? [0, 0, 0] : [100, 100, 100];
-                pdf.setTextColor(textColor[0], textColor[1], textColor[2]);
-
-                pdf.text(
-                    cell,
-                    xOffset + cellIndex * (tableWidth / 2) + 2,
-                    yOffset + (rowIndex + 0.5) * lineHeight + 3
-                );
-                });
-            });
-
-            pdf.save(`package_${packageTransfered.s_name}.pdf`);
-        }
-
+        downloadPDF(id) {
+            console.log(id);
+            this.$inertia.get(`/vepost-tracking/pdf/${id}`);
+        },
     },
 };
 </script>

@@ -15,9 +15,9 @@ class CustomerController extends Controller
 
     public function __invoke(Request $request)
     {
-        $customer_count =0;
+        $customer_count = 0;
 
-        $total_packages =0;
+        $total_packages = 0;
 
         $viewed_packages = 0;
 
@@ -95,6 +95,7 @@ class CustomerController extends Controller
             ],
             'packages' => $packages->map(function ($package) {
                 return [
+                    'id' => $package->id,
                     's_name' => $package->sender_displayname,
                     'fileName' => $package->file_name,
                     'fileSizeTransfer' => $package->file_size_transfer,

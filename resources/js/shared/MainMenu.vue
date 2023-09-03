@@ -345,6 +345,116 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-4">
+                <div class="py-3">
+                    <div class="tabs">
+                        <div class="relative tab">
+                            <input
+                                class="tab-checkbox"
+                                type="checkbox"
+                                id="packages-history-accordian"
+                                :checked="true"
+                            />
+                            <label
+                                class="tab-label styles-configurator-tab-label"
+                                :style="`${
+                                    collapsed ? 'display: none !important' : ''
+                                }`"
+                                for="packages-history-accordian"
+                            >
+                                {{ "Packages History" }}
+                            </label>
+
+                            <div
+                                :class="[
+                                    'tab-content',
+                                    !collapsed ? 'pl-3 pt-3' : '',
+                                ]"
+                            >
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/sent/history"
+                                    >
+                                        <icon
+                                            name="users"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/sent/history')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/sent/history')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Sent
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/recieved/history"
+                                    >
+                                        <icon
+                                            name="office"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl(
+                                                    'customer/recieved/history'
+                                                )
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl(
+                                                    'customer/recieved/history'
+                                                )
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Recieved
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div class="mb-0">
+                                    <Link
+                                        class="group flex items-center py-3"
+                                        href="/customer/viewed/history"
+                                    >
+                                        <icon
+                                            name="dashboard"
+                                            class="mr-2 w-4 h-4"
+                                            :class="
+                                                isUrl('customer/viewed/history')
+                                                    ? 'fill-white'
+                                                    : 'fill-indigo-400 group-hover:fill-white'
+                                            "
+                                        />
+                                        <div
+                                            :class="
+                                                isUrl('customer/viewed/history')
+                                                    ? 'text-white'
+                                                    : 'text-indigo-300 group-hover:text-white'
+                                            "
+                                        >
+                                            Viewed
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

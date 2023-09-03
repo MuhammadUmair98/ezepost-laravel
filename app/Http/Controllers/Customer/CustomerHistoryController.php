@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
@@ -9,64 +8,63 @@ use App\Models\VepostTracking;
 use Carbon\Carbon;
 use Inertia\Inertia;
 
-class CustomerPackageController extends Controller
-{
-    //
 
-    public function packagesSentToday(Request $request)
+class CustomerHistoryController extends Controller
+{
+    public function packagesSentHistory(Request $request)
     {
         $model = new VepostTracking;
         if ($request->search) {
-            $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
+            $model =   $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('sender_username', $username)->whereDate('time_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings =  $model->where('sender_username', $username)->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
                 'headText' => 'Packages Sent',
                 'packages' => $vendor_trackings,
-                'url' => '/customer/sent/today'
+                'url' => '/customer/sent/history',
             ]
         );
     }
 
 
-    public function packagesViewedToday(Request $request)
+    public function packagesViewedHistory(Request $request)
+    {
+        $model = new VepostTracking;
+        if ($request->search) {
+            $model =    $model->where("file_name", "LIKE", "%" . $request->search . "%");
+        }
+        $username = $request->user()->username;
+        $vendor_trackings = $model->whereNotNull('view_once')
+            ->where('receiver_username', $username)->orWhere('sender_username', $username)
+            ->paginate(10);
+        return Inertia::render(
+            'customers/Packages',
+            [
+                'headText' => 'Packages Viewed',
+                'packages' => $vendor_trackings,
+                'url' => '/customer/recieved/history',
+            ]
+        );
+    }
+
+
+    public function packagesRecievedHistory(Request $request)
     {
         $model = new VepostTracking;
         if ($request->search) {
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::whereNotNull('view_once')
-            ->where('receiver_username', $username)->orWhere('sender_username', $username)
-            ->whereDate('time_send_end', Carbon::now())->paginate(10);
-        return Inertia::render(
-            'customers/Packages',
-            [
-                'headText' => 'Packages Viewed',
-                'packages' => $vendor_trackings,
-                'url' => '/customer/viewed/today'
-            ]
-        );
-    }
-
-
-    public function packagesRecievedToday(Request $request)
-    {
-        $model = new VepostTracking;
-        if ($request->search) {
-            $model =  $model->where("file_name", "LIKE", "%" . $request->search . "%");
-        }
-        $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('receiver_username', $username)->whereDate('time_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings = $model->where('receiver_username', $username)->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
                 'headText' => 'Packages Received',
                 'packages' => $vendor_trackings,
-                'url' => '/customer/recieved/today'
+                'url' => '/customer/viewed/history',
             ]
         );
     }
