@@ -98,14 +98,34 @@ class PlanController extends Controller
         if (empty($request->slug)) return response()->error(false, 400);
         if (empty($request->payment)) return response()->error(false, 400);
         $user = auth()->user();
-        $plan = DB::table('plans')->select('id', 'stripe_plan')->where('slug', $request->slug)->first();
+        $plan = DB::table('plans')->select('id', 'stripe_plan', 'type', 'slug')->where('slug', $request->slug)->first();
 
         try {
             $user->createOrGetStripeCustomer();
             $user->updateDefaultPaymentMethod($request->payment);
 
             $user->newSubscription('default', $plan->stripe_plan)->create($request->payment);
+            $user = $request->user();
+            $controlstring = $request->user()->controlstring;
+            if ($plan->type === 'Business') {
 
+                $controlstring[1] = '1';
+            }
+            $plan = $plan->slug;
+            // Split the string by the '-' delimiter
+            $parts = explode('-', $plan);
+
+            // Get the last part of the array, which should be the plan type
+            $plan_type = end($parts);
+
+            if ($plan_type === 'basic') {
+                $controlstring[2] = '2';
+            } elseif ($plan_type === 'premium') {
+                $controlstring[2] = '3';
+            } elseif ($plan_type === 'starter') {
+                $controlstring[2] = '1';
+            }
+            $user->update(['controlstring' => $controlstring]);
             return response()->success([
                 'data1' => '',
                 'data2' => '',

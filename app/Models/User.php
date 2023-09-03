@@ -25,7 +25,8 @@ class User extends Authenticatable
         'username',
         'is_organization',
         'user_type',
-        'phone'
+        'phone',
+        'controlstring'
     ];
 
     /**

@@ -20,7 +20,7 @@ class CustomerPackageController extends Controller
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('sender_username', $username)->whereDate('time_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings = VepostTracking::where('sender_username', $username)->whereDate('ltime_send_end', Carbon::now())->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
@@ -62,7 +62,7 @@ class CustomerPackageController extends Controller
             $model =  $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('receiver_username', $username)->whereDate('time_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings = VepostTracking::where('receiver_username', $username)->whereDate('ltime_send_end', Carbon::now())->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [

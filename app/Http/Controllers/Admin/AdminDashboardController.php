@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Enums\UserType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminDashboardController extends Controller
 {
@@ -28,5 +29,13 @@ class AdminDashboardController extends Controller
             'viewedOnce' => $viewed_packages
 
         ]);
+    }
+
+    public function blockCustomer(Request $request, int $id)
+    {
+        $user = User::findOrFail($id);
+        $controlstring = $user->controlstring;
+        $controlstring[0] = '0';
+        return Redirect::back()->with('error', 'The customer account has been blocked');
     }
 }

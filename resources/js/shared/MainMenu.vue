@@ -225,7 +225,7 @@
                                         />
                                         <div
                                             :class="
-                                                isUrl('customer/dashboard')
+                                                isUrl('customer/pricing')
                                                     ? 'text-white'
                                                     : 'text-indigo-300 group-hover:text-white'
                                             "
@@ -249,14 +249,14 @@
                                         name="printer"
                                         class="mr-2 w-4 h-4"
                                         :class="
-                                            isUrl('customer/pricing')
+                                            isUrl('customer/top-up')
                                                 ? 'fill-white'
                                                 : 'fill-indigo-400 group-hover:fill-white'
                                         "
                                     />
                                     <div
                                         :class="
-                                            isUrl('customer/dashboard')
+                                            isUrl('customer/top-up')
                                                 ? 'text-white'
                                                 : 'text-indigo-300 group-hover:text-white'
                                         "

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Constants\Constants;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginStoreRequest;
@@ -24,6 +25,8 @@ class AuthController extends Controller
     public function signup(SignupStoreRequest $request)
     {
 
+        $controlstring = Constants::CONTROLSTRING;
+        $controlstring[0] = '1';
         // Create the user
         $user = new User([
             'name' => $request->input('name'),
@@ -32,7 +35,8 @@ class AuthController extends Controller
             'is_organization' => $request->input('isOrganization'),
             'user_type' => UserType::TYPE_CUSTOMER, // Assuming 'customer' is a valid UserType
             'password' => bcrypt($request->input('password')),
-            'phone' => $request->input('phone')
+            'phone' => $request->input('phone'),
+            'controlstring' => $controlstring
         ]);
 
         $user->save();

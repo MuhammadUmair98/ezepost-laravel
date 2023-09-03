@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/customers/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+            Route::get('/block/customer/{id}', [AdminDashboardController::class, 'blockCustomer']);
         }
     );
 
