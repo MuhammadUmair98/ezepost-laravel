@@ -36,6 +36,7 @@ class CustomerHistoryController extends Controller
         if ($request->search) {
             $model =    $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
+        $username = $request->user()->username;
         $vendor_trackings = $model
         ->where(function($query) use ($username) {
             $query->where('receiver_username', $username)
@@ -62,7 +63,7 @@ class CustomerHistoryController extends Controller
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = $model->where('receiver_username', $username)->paginate(10);
+        $vendor_trackings = $model->where('receiver_username', $username)->orderBy('ltime_recv_end', 'desc')->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
