@@ -88,5 +88,23 @@ export default {
         activePrice: String,
     },
     layout: Layout,
+    data() {
+        return {
+            showYearlyPlans: false,
+        };
+    },
+    computed: {
+        filteredPlans() {
+            if (this.showYearlyPlans) {
+                return this.plans.filter(
+                    (plan) => plan.subscription_type === "yearly"
+                );
+            } else {
+                return this.plans.filter(
+                    (plan) => plan.subscription_type === "monthly"
+                );
+            }
+        },
+    },
 };
 </script>

@@ -1,7 +1,8 @@
 <template>
     <Head title="Signup" />
+    <guest-nav></guest-nav>
     <div
-        class="flex items-center justify-center p-6 min-h-screen bg-indigo-800"
+        class="flex items-center justify-center p-6 min-h-screen bg-gradient-to-b from-blue-800 via-blue-900 to-gray-900"
     >
         <div class="w-full max-w-md">
             <form
@@ -84,6 +85,7 @@ import { Head } from "@inertiajs/vue3";
 import Logo from "../../shared/Logo.vue";
 import TextInput from "../../shared/TextInput.vue";
 import LoadingButton from "../../shared/LoadingButton.vue";
+import GuestNav from "../../shared/GuestNav.vue";
 
 export default {
     components: {
@@ -91,6 +93,7 @@ export default {
         LoadingButton,
         Logo,
         TextInput,
+        GuestNav,
     },
     props: { errors: Object },
     data() {
