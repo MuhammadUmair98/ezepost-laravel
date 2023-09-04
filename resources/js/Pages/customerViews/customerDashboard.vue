@@ -89,7 +89,7 @@
                 </p>
                 <button
                     class="mt-4 px-6 py-2 bg-white text-rgb-secondary font-semibold rounded-lg cursor-default"
-                >
+                >   
                     {{ viewedOnce }} Packages
                 </button>
             </div>
