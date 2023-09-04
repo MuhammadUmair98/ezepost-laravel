@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
 
         $total_packages = DB::table('vepost_tracking')->count();
 
-        $viewed_packages = DB::table('vepost_tracking')->whereNotNull('view_once')->count();
+        $viewed_packages = DB::table('vepost_tracking')->whereNotNull('time_post_opened')->count();
 
         return Inertia::render('adminviews/AdminDashboard', [
             'customerCount' => $customer_count,
