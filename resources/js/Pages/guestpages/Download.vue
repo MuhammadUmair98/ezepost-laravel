@@ -5,14 +5,15 @@
         <guest-nav></guest-nav>
   
         <div class="flex-grow bg-gradient-to-b from-blue-800 via-blue-900 to-gray-900 py-16">
-          <div class="container mx-auto text-center">
-            <div class="mb-6 flex items-center justify-center">
+          <div class="container mx-auto text-center mb-3">
+            <div class="mb-8 flex items-center justify-center ">
             <svg
               class="w-10 h-10 text-white "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              
             >
               <path
                 stroke-linecap="round"
@@ -21,7 +22,7 @@
                 d="M4 19h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2v7zM14 9h5l-7 7-7-7h5V3h4v6z"
               ></path>
             </svg>
-            <h2 class="text-4xl font-semibold text-white mb-6 ml-4">Download</h2>
+            <h2 class="text-4xl font-semibold text-white mb-6 ml-4 mt-3">Download</h2>
         </div>
             
             <p class="text-lg text-white mb-8">

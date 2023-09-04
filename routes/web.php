@@ -58,7 +58,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(["check.permission:" . UserType::TYPE_CUSTOMER])->group(
         function () {
             Route::get('/customer/dashboard', CustomerController::class);
-            Route::get('/customer/pricing', [PlanController::class, 'index'])->name('pricing');
+            Route::get('/customer/pricing', CustomerController::class);
+            Route::get('/customer/personal', [PlanController::class, 'index'])->name('personal');
+            Route::get('/customer/business', [PlanController::class, 'indexBusiness'])->name('business');
             Route::get('/customer/checkout/{slug}', [PlanController::class, 'create']);
             Route::post('/customer/subscribe', [PlanController::class, 'store']);
             Route::post('/remove-subscription', [PlanController::class, 'cancelSubscription']);
