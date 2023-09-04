@@ -65,12 +65,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/customer/subscribe', [PlanController::class, 'store']);
             Route::post('/remove-subscription', [PlanController::class, 'cancelSubscription']);
             Route::get('/customer/sent/today', [CustomerPackageController::class, 'packagesSentToday']);
-            Route::get('/customer/recieved/today', [CustomerPackageController::class, 'packagesRecievedToday']);
+            Route::get('/customer/received/today', [CustomerPackageController::class, 'packagesRecievedToday']);
             Route::get('/customer/viewed/today', [CustomerPackageController::class, 'packagesViewedToday']);
 
             //comments
             Route::get('/customer/sent/history', [CustomerHistoryController::class, 'packagesSentHistory']);
-            Route::get('/customer/recieved/history', [CustomerHistoryController::class, 'packagesRecievedHistory']);
+            Route::get('/customer/received/history', [CustomerHistoryController::class, 'packagesRecievedHistory']);
             Route::get('/customer/viewed/history', [CustomerHistoryController::class, 'packagesViewedHistory']);
 
             Route::get('/customer/top-up', [UsertopupController::class, 'index']);

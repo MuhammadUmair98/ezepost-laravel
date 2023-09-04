@@ -346,20 +346,20 @@
                                 <div class="mb-0">
                                     <Link
                                         class="group flex items-center py-3"
-                                        href="/customer/recieved/today"
+                                        href="/customer/received/today"
                                     >
                                         <icon
                                             name="office"
                                             class="mr-2 w-4 h-4"
                                             :class="
-                                                isUrl('customer/recieved/today')
+                                                isUrl('customer/received/today')
                                                     ? 'fill-white'
                                                     : 'fill-indigo-400 group-hover:fill-white'
                                             "
                                         />
                                         <div
                                             :class="
-                                                isUrl('customer/recieved/today')
+                                                isUrl('customer/received/today')
                                                     ? 'text-white'
                                                     : 'text-indigo-300 group-hover:text-white'
                                             "
@@ -452,7 +452,7 @@
                                 <div class="mb-0">
                                     <Link
                                         class="group flex items-center py-3"
-                                        href="/customer/recieved/history"
+                                        href="/customer/received/history"
                                     >
                                         <icon
                                             name="office"

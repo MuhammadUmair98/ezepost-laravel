@@ -20,7 +20,7 @@ class CustomerPackageController extends Controller
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('sender_username', $username)->whereDate('ltime_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings = VepostTracking::where('sender_username', $username)->orderBy('ltime_send_end', 'desc')->whereDate('ltime_send_end', Carbon::now())->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
@@ -43,7 +43,7 @@ class CustomerPackageController extends Controller
             $query->where('receiver_username', $username)
                 ->orWhere('sender_username', $username);
         })
-            ->whereDate('time_send_end', Carbon::now())->paginate(10);
+            ->whereDate('time_post_opened', Carbon::now())->orderBy('time_post_opened', 'desc')->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
@@ -62,13 +62,13 @@ class CustomerPackageController extends Controller
             $model =  $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = VepostTracking::where('receiver_username', $username)->whereDate('ltime_send_end', Carbon::now())->paginate(10);
+        $vendor_trackings = VepostTracking::where('receiver_username', $username)->orderBy('ltime_recv_end', 'desc')->whereDate('ltime_recv_end', Carbon::now())->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
                 'headText' => 'Packages Received',
                 'packages' => $vendor_trackings,
-                'url' => '/customer/recieved/today'
+                'url' => '/customer/received/today'
             ]
         );
     }

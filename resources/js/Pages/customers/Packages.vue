@@ -13,21 +13,22 @@
         <div class="bg-white rounded-md shadow overflow-x-auto">
             <table class="w-full whitespace-nowrap">
                 <tr class="text-left font-bold">
-                    <th class="pb-4 pt-6 px-6">Recieved File Name</th>
+                    <th class="pb-4 pt-6 px-6">File Name</th>
                     <th class="pb-4 pt-6 px-6">File Size</th>
                     <th class="pb-4 pt-6 px-6">Sender Name</th>
-                    <th class="pb-4 pt-6 px-6" colspan="2">Reciever Name</th>
+                    <th class="pb-4 pt-6 px-6">Reciever Name</th>
+                    <th class="pb-4 pt-6 px-6">Date</th>
                 </tr>
                 <tr
                     v-for="packageData in packages.data"
                     :key="packageData.id"
                     class="hover:bg-gray-100 focus-within:bg-gray-100"
-                >
+                >   
                     <td class="border-t">
                         <Link
                             class="flex items-center px-6 py-4 focus:text-indigo-500"
                         >
-                            {{ packageData.file_name }}
+                            {{ packageData.file_name }}  
                         </Link>
                     </td>
                     <td class="border-t">
@@ -37,7 +38,7 @@
                     </td>
                     <td class="border-t">
                         <Link class="flex items-center px-6 py-4" tabindex="-1">
-                            {{ packageData.sender_displayname }}
+                            {{ packageData.sender_username }}
                         </Link>
                     </td>
                     <td class="border-t">
@@ -45,6 +46,21 @@
                             {{ packageData.receiver_username }}
                         </Link>
                     </td>
+                    <td class="border-t">
+                        <Link class="flex items-center px-6 py-4" tabindex="-1">
+                            <span v-if="url === '/customer/received/history'">{{ packageData.ltime_recv_end ? packageData.ltime_recv_end : "No Date" }}</span>
+                            <span v-if="url === '/customer/viewed/history'">{{ packageData.time_post_opened }}</span>
+                            <span v-if="url === '/customer/sent/history'">{{ packageData.ltime_send_end ? packageData.ltime_send_end : "No Date" }}</span>
+
+                            <span v-if="url === '/customer/received/today'">{{ packageData.ltime_recv_end }}</span>
+                            <span v-if="url === '/customer/sent/today'">{{ packageData.ltime_send_end }}</span>
+                            <span v-if="url === '/customer/viewed/today'">{{ packageData.time_post_opened }}</span>
+                           
+                        </Link>
+                    </td>
+                    <div>
+   
+  </div>
                 </tr>
                 <tr v-if="packages.data.length === 0">
                     <td class="px-6 py-4 border-t" colspan="4">
@@ -88,6 +104,12 @@ export default {
             },
         };
     },
+    computed: {
+    isReceivedHistoryRoute() {
+      // Check if the current route path matches the desired pattern
+      return this.$url === '/customer/recieved/history';
+    },
+  },
     watch: {
         form: {
             deep: true,
@@ -104,4 +126,6 @@ export default {
         },
     },
 };
+
+
 </script>
