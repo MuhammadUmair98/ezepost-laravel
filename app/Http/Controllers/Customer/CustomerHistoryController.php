@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\VepostTracking;
-use Carbon\Carbon;
 use Inertia\Inertia;
 
 
@@ -18,7 +17,7 @@ class CustomerHistoryController extends Controller
             $model =   $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings =  $model->where('sender_username', $username)->paginate(10);
+        $vendor_trackings =  $model->where('sender_username', $username)->orderBy('ltime_send_end', 'desc')->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
@@ -37,15 +36,20 @@ class CustomerHistoryController extends Controller
             $model =    $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = $model->whereNotNull('view_once')
-            ->where('receiver_username', $username)->orWhere('sender_username', $username)
+        $vendor_trackings = $model
+            ->where(function ($query) use ($username) {
+                $query->where('receiver_username', $username)
+                    ->orWhere('sender_username', $username);
+            })
+            ->whereNotNull('time_post_opened')
+            ->orderBy('time_post_opened', 'desc') // Order by ltime_send_end in descending order
             ->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
                 'headText' => 'Packages Viewed',
                 'packages' => $vendor_trackings,
-                'url' => '/customer/recieved/history',
+                'url' => '/customer/viewed/history',
             ]
         );
     }
@@ -58,13 +62,13 @@ class CustomerHistoryController extends Controller
             $model = $model->where("file_name", "LIKE", "%" . $request->search . "%");
         }
         $username = $request->user()->username;
-        $vendor_trackings = $model->where('receiver_username', $username)->paginate(10);
+        $vendor_trackings = $model->where('receiver_username', $username)->orderBy('ltime_recv_end', 'desc')->paginate(10);
         return Inertia::render(
             'customers/Packages',
             [
                 'headText' => 'Packages Received',
                 'packages' => $vendor_trackings,
-                'url' => '/customer/viewed/history',
+                'url' => '/customer/received/history',
             ]
         );
     }
