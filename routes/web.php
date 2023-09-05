@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\CustomerPackageController;
 use App\Http\Controllers\Customer\CustomerHistoryController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlanController;
@@ -38,6 +39,14 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/', [UserController::class, 'showUserDashboard']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/vepost-tracking/pdf/{id}', [PdfController::class, 'index']);
+//
+
+
+Route::get('/forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(["check.permission:" . UserType::TYPE_ADMIN])->group(
