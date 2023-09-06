@@ -18,6 +18,7 @@
                     <th class="pb-4 pt-6 px-6">Sender Name</th>
                     <th class="pb-4 pt-6 px-6">Reciever Name</th>
                     <th class="pb-4 pt-6 px-6">Date</th>
+                    <th class="pb-4 pt-6 px-6">Proof of Delivery</th>
                 </tr>
                 <tr
                     v-for="packageData in packages.data"
@@ -45,7 +46,7 @@
                         <Link class="flex items-center px-6 py-4" tabindex="-1">
                             {{ packageData.receiver_username }}
                         </Link>
-                    </td>
+                        </td>
                     <td class="border-t">
                         <Link class="flex items-center px-6 py-4" tabindex="-1">
                             <span v-if="url === '/customer/received/history'">{{ packageData.ltime_recv_end ? packageData.ltime_recv_end : "No Date" }}</span>
@@ -58,6 +59,17 @@
                            
                         </Link>
                     </td>
+                    <td class="border-t">
+    <a
+        href="#"
+        class="flex items-center px-6 py-4"
+        download
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+        </svg>
+    </a>
+</td>
                     <div>
    
   </div>

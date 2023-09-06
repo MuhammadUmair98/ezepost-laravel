@@ -15,12 +15,24 @@ use Illuminate\Support\Facades\Session;
 class AuthController extends Controller
 {
     public function login(LoginStoreRequest $request)
+{
+    $user = User::where('username', $request->username)->first();
+
+    // Check if the user exists and if the password is correct
+    if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) 
     {
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return Redirect::to('/');
-        }
-        return Redirect::back()->with(['error' => 'There is an authentication error']);
+        
+        
+        
+        
+        Auth::login($user);
+        return Redirect::to('/');
     }
+    
+    return Redirect::back()->with(['error' => 'There is an authentication error']);
+}
+
+    
 
     public function signup(SignupStoreRequest $request)
     {

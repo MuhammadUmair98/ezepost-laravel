@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\CustomerPackageController;
 use App\Http\Controllers\Customer\CustomerHistoryController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PlanController;
@@ -33,11 +34,20 @@ Route::inertia('/download', 'guestpages/Download');
 Route::inertia('/signup', 'auth/EzepostSignup');
 Route::inertia('/about-us', 'guestpages/AboutUs');
 Route::inertia('/contact-us', 'guestpages/ContactUs');
+Route::inertia('/blocked', 'customerViews/blocked');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/', [UserController::class, 'showUserDashboard']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/vepost-tracking/pdf/{id}', [PdfController::class, 'index']);
+//
+
+
+Route::get('/forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(["check.permission:" . UserType::TYPE_ADMIN])->group(
@@ -51,11 +61,13 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/customers/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-            Route::get('/block/customer/{id}', [AdminDashboardController::class, 'blockCustomer']);
+            Route::post('/block/customer/{id}', [AdminDashboardController::class, 'blockCustomer']);
+            Route::post('/unblock/customer/{id}', [AdminDashboardController::class, 'unblockCustomer']);
+            
         }
     );
-
-    Route::middleware(["check.permission:" . UserType::TYPE_CUSTOMER])->group(
+    
+    Route::middleware(["check.permission:" . UserType::TYPE_CUSTOMER,'check.blocked'])->group(
         function () {
             Route::get('/customer/dashboard', CustomerController::class);
             Route::get('/customer/pricing', CustomerController::class);
@@ -67,7 +79,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customer/sent/today', [CustomerPackageController::class, 'packagesSentToday']);
             Route::get('/customer/received/today', [CustomerPackageController::class, 'packagesRecievedToday']);
             Route::get('/customer/viewed/today', [CustomerPackageController::class, 'packagesViewedToday']);
-
+            
+            
             //comments
             Route::get('/customer/sent/history', [CustomerHistoryController::class, 'packagesSentHistory']);
             Route::get('/customer/received/history', [CustomerHistoryController::class, 'packagesRecievedHistory']);
@@ -75,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/customer/top-up', [UsertopupController::class, 'index']);
             Route::post('/customer/charge', [UsertopupController::class, 'store']);
+            
         }
     );
 });

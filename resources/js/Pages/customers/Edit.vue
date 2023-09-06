@@ -36,8 +36,23 @@
                         type="submit"
                         >Update Customer</loading-button
                     >
+                      <!-- New Block User Button -->
+                      <button 
+    @click="blockCustomer(editedCustomer.id)"
+    class="btn-danger-manual ml-auto"
+>
+    Block Customer
+</button>
+<button 
+    @click="unblockCustomer(editedCustomer.id)" 
+    class="btn-info-manual ml-auto"
+>
+    Unblock Customer
+</button>
                 </div>
+                
             </form>
+            
         </div>
         <h2 class="mt-12 text-2xl font-bold">Packages Transferred</h2>
         <div class="mt-6 bg-white rounded shadow overflow-x-auto">
@@ -139,6 +154,24 @@ export default {
                     "An error occurred while updating the customer.";
             }
         },
+
+        async blockCustomer(id) {
+            try {
+                await this.$inertia.post(`/block/customer/${id}`); // Send block request to server
+                alert('The user has been successfully blocked.'); // Success Message
+            } catch (error) {
+                alert('An error occurred while blocking the user.'); // Error Message
+            }
+        },
+
+        async unblockCustomer(id) {
+            try {
+                await this.$inertia.post(`/unblock/customer/${id}`);
+                alert('The user has been successfully unblocked.');
+    }       catch (error) {
+                alert('An error occurred while unblocking the user.');
+    }
+},
 
         downloadPDF(id) {
             console.log(id);

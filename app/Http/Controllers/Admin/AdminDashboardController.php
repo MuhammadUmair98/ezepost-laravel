@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
 
         $total_packages = DB::table('vepost_tracking')->count();
 
-        $viewed_packages = DB::table('vepost_tracking')->whereNotNull('view_once')->count();
+        $viewed_packages = DB::table('vepost_tracking')->whereNotNull('time_post_opened')->count();
 
         return Inertia::render('adminviews/AdminDashboard', [
             'customerCount' => $customer_count,
@@ -36,6 +36,18 @@ class AdminDashboardController extends Controller
         $user = User::findOrFail($id);
         $controlstring = $user->controlstring;
         $controlstring[0] = '0';
+        $user->controlstring = $controlstring; // Update the control string
+        $user->save();  // Save the updated user info
         return Redirect::back()->with('error', 'The customer account has been blocked');
     }
+
+    public function unblockCustomer(Request $request, int $id)
+{
+    $user = User::findOrFail($id);
+    $controlstring = $user->controlstring;
+    $controlstring[0] = '1';
+    $user->controlstring = $controlstring;
+    $user->save();
+    return Redirect::back()->with('success', 'The customer account has been unblocked');
+}
 }

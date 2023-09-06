@@ -1,5 +1,5 @@
 <template>
-    <Head title="Login" />
+    <Head title="Reset Password" />
     <guest-nav></guest-nav>
 
     <div
@@ -8,21 +8,21 @@
         <div class="w-full max-w-md">
             <form
                 class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden"
-                @submit.prevent="login"
+                @submit.prevent="resetPassword"
             >
                 <div class="px-10 py-12">
                     <h1 class="text-center text-3xl font-bold mb-4">
-                        Welcome Back!
+                        Reset Password
                     </h1>
                     <div
                         class="mt-6 mx-auto w-24 border-b-2 border-rgb-primary"
                     />
                     <text-input
-                        v-model="form.username"
-                        :error="form.errors.username"
+                        v-model="form.email"
+                        :error="form.errors.email"
                         class="mt-10 text-input"
-                        label="Username"
-                        placeholder="Enter your username"
+                        label="Email"
+                        placeholder="Enter your email"
                         autofocus
                         autocapitalize="off"
                     />
@@ -34,27 +34,14 @@
                         type="password"
                         placeholder="Enter your password"
                     />
-                    <label
-                        class="flex items-center mt-6 select-none"
-                        for="remember"
-                    >
-                        <input
-                            id="remember"
-                            v-model="form.remember"
-                            class="mr-1"
-                            type="checkbox"
-                        />
-                        <span class="text-sm">Remember Me</span>
-                    </label>
-                    <p class="mt-6">
-                        Dont have an account yet ?
-                        <a
-                            href="/signup"
-                            class="text-decoration-line: underline font-bold"
-                        >
-                            Register Now !
-                        </a>
-                    </p>
+                    <text-input
+                        v-model="form.password_confirmation"
+                        :error="form.errors.password_confirmation"
+                        class="mt-6 text-input"
+                        label="Confirm Password"
+                        type="password"
+                        placeholder="Confirm your password"
+                    />
                 </div>
 
                 <div
@@ -65,13 +52,8 @@
                         class="btn-indigo loading-button"
                         type="submit"
                     >
-                        Login
+                        Submit
                     </loading-button>
-                    <Link
-                        href="/forget-password"
-                        class="ml-4 text-gray-500 hover:text-indigo-600"
-                        >Forgot your password?</Link
-                    >
                 </div>
             </form>
         </div>
@@ -97,15 +79,17 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                username: "",
+                email: "",
                 password: "",
-                remember: false,
+                password_confirmation: "",
+                token: this.token,
             }),
         };
     },
+    props: { token: String },
     methods: {
-        login() {
-            this.form.post("/login");
+        resetPassword() {
+            this.form.post("/reset-password");
         },
     },
 };
