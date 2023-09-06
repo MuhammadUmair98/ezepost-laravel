@@ -18,7 +18,8 @@
                     <th class="pb-4 pt-6 px-6">Sender Name</th>
                     <th class="pb-4 pt-6 px-6">Reciever Name</th>
                     <th class="pb-4 pt-6 px-6">Date</th>
-                    <th class="pb-4 pt-6 px-6">Proof of Delivery</th>
+                    <th class="pb-4 pt-6 px-6">View Receipt </th>
+                    <th class="pb-4 pt-6 px-6">Download Receipt</th>
                 </tr>
                 <tr
                     v-for="packageData in packages.data"
@@ -59,6 +60,14 @@
                            
                         </Link>
                     </td>
+                    <a
+    v-bind:href="'/vepost-tracking/view-pdf/' + packageData.id"
+    target="_blank"
+    class="flex items-center px-6 py-4"
+>
+    <!-- new SVG for view -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 0 0 0 0 0zm-2-4h4"></path></svg>
+</a>
                     <td class="border-t">
     <a
         v-bind:href="'/vepost-tracking/pdf/' + packageData.id"
@@ -68,6 +77,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>
     </a>
 </td>
+
                     <div>
    
   </div>
