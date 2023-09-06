@@ -40,6 +40,7 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/', [UserController::class, 'showUserDashboard']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/vepost-tracking/pdf/{id}', [PdfController::class, 'index']);
+Route::get('/vepost-tracking/view-pdf/{id}', [PdfController::class, 'view']);
 //
 
 

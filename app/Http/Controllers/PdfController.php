@@ -15,4 +15,12 @@ class PdfController extends Controller
         $pdf = PDF::loadView('file_transfer', $data);
         return $pdf->download('vepost_tracking.pdf');
     }
+
+    public function view(Request $request)
+    {
+        $file = VepostTracking::findOrFail($request->id);
+        $data = ['file' => $file];
+        $pdf = PDF::loadView('file_transfer', $data);
+        return $pdf->stream('vepost_tracking.pdf');
+    }
 }
